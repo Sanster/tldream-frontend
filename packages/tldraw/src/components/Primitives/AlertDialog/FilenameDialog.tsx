@@ -115,6 +115,6 @@ const ActionWrapper = styled('div', {
   marginTop: 10,
 })
 
-const Input = styled(TextField, {
+export const Input = styled(TextField, {
   background: '$hover',
 })

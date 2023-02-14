@@ -163,6 +163,7 @@ export function Tldraw({
   onSessionStart,
   onSessionEnd,
   onExport,
+  onRunControlNet,
   hideCursors,
 }: TldrawProps) {
   const [sId, setSId] = React.useState(id)
@@ -230,6 +231,7 @@ export function Tldraw({
       onAssetCreate,
       onAssetUpload,
       onExport,
+      onRunControlNet,
       onSessionStart,
       onSessionEnd,
     })
@@ -300,6 +302,7 @@ export function Tldraw({
       onAssetCreate,
       onAssetUpload,
       onExport,
+      onRunControlNet,
       onSessionStart,
       onSessionEnd,
     }
@@ -322,6 +325,7 @@ export function Tldraw({
     onAssetCreate,
     onAssetUpload,
     onExport,
+    onRunControlNet,
     onSessionStart,
     onSessionEnd,
   ])

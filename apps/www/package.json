@@ -2,6 +2,7 @@
   "name": "@tldraw/www",
   "version": "1.8.0",
   "private": true,
+  "proxy": "http://127.0.0.1:4242",
   "description": "A tiny little drawing app (site).",
   "repository": {
     "type": "git",

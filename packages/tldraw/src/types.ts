@@ -113,6 +113,8 @@ export interface TDSnapshot {
     isLoading: boolean
     disableAssets: boolean
     selectByContain?: boolean
+    isRunningModel: boolean
+    prompt: string
   }
   document: TDDocument
   room?: {

@@ -184,6 +184,7 @@ export interface TDCallbacks {
    * (optional) A callback to run when the user exports their page or selection.
    */
   onExport?: (app: TldrawApp, info: TDExport) => Promise<void>
+  onRunControlNet?: (app: TldrawApp, info: TDExport) => void
   /**
    * (optional) A callback to run when a session begins.
    */
@@ -2131,30 +2132,31 @@ export class TldrawApp extends StateManager<TDSnapshot> {
     // Set export background
     const exportBackground: TDExportBackground = this.settings.exportBackground
     const darkBackground = '#212529'
-    const lightBackground = 'rgb(248, 249, 250)'
+    const lightBackground = 'rgb(255, 255, 255)'
+    svg.style.setProperty('background-color', lightBackground)
 
-    switch (exportBackground) {
-      case TDExportBackground.Auto: {
-        svg.style.setProperty(
-          'background-color',
-          this.settings.isDarkMode ? darkBackground : lightBackground
-        )
-        break
-      }
-      case TDExportBackground.Dark: {
-        svg.style.setProperty('background-color', darkBackground)
-        break
-      }
-      case TDExportBackground.Light: {
-        svg.style.setProperty('background-color', lightBackground)
-        break
-      }
-      case TDExportBackground.Transparent:
-      default: {
-        svg.style.setProperty('background-color', 'transparent')
-        break
-      }
-    }
+    // switch (exportBackground) {
+    //   case TDExportBackground.Auto: {
+    //     svg.style.setProperty(
+    //       'background-color',
+    //       this.settings.isDarkMode ? darkBackground : lightBackground
+    //     )
+    //     break
+    //   }
+    //   case TDExportBackground.Dark: {
+    //     svg.style.setProperty('background-color', darkBackground)
+    //     break
+    //   }
+    //   case TDExportBackground.Light: {
+    //     svg.style.setProperty('background-color', lightBackground)
+    //     break
+    //   }
+    //   case TDExportBackground.Transparent:
+    //   default: {
+    //     svg.style.setProperty('background-color', 'transparent')
+    //     break
+    //   }
+    // }
 
     svg
       .querySelectorAll('.tl-fill-hitarea, .tl-stroke-hitarea, .tl-binding-indicator')
@@ -2434,6 +2436,38 @@ export class TldrawApp extends StateManager<TDSnapshot> {
 
     if (this.callbacks.onExport) {
       this.callbacks.onExport(this, {
+        name,
+        type: format,
+        blob,
+      })
+    } else {
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `${name}.${format}`
+      link.click()
+    }
+  }
+
+  runControlNet = async (
+    format: Exclude<TDExportType, TDExportType.JSON> = TDExportType.PNG,
+    opts = {} as Partial<{
+      ids: string[]
+      pageId: string
+      scale: number
+      quality: number
+    }>
+  ) => {
+    const { pageId = this.currentPageId } = opts
+
+    const blob = await this.getImage(format, opts)
+
+    if (!blob) return
+
+    const name = this.document.pages[pageId].name ?? 'export'
+
+    if (this.callbacks.onRunControlNet) {
+      this.callbacks.onRunControlNet(this, {
         name,
         type: format,
         blob,
@@ -4213,6 +4247,8 @@ export class TldrawApp extends StateManager<TDSnapshot> {
       snapLines: [],
       isLoading: false,
       disableAssets: false,
+      isRunningModel: false,
+      prompt: 'masterpiece, best quality',
     },
     document: TldrawApp.defaultDocument,
   }

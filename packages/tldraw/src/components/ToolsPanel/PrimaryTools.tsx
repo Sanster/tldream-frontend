@@ -14,7 +14,7 @@ import { EraserIcon } from '~components/Primitives/icons'
 import { breakpoints } from '~components/breakpoints'
 import { useTldrawApp } from '~hooks'
 import { styled } from '~styles/stitches.config'
-import { TDShapeType, TDSnapshot } from '~types'
+import { TDExportType, TDShapeType, TDSnapshot } from '~types'
 import { ShapesMenu } from './ShapesMenu'
 
 const activeToolSelector = (s: TDSnapshot) => s.appState.activeTool
@@ -98,7 +98,8 @@ export const PrimaryTools = React.memo(function PrimaryTools() {
         <EraserIcon />
       </ToolButtonWithTooltip>
       <ShapesMenu activeTool={activeTool} isToolLocked={isToolLocked} />
-      <ToolButtonWithTooltip
+
+      {/* <ToolButtonWithTooltip
         kbd={'8'}
         label={intl.formatMessage({ id: 'arrow' })}
         onClick={selectArrowTool}
@@ -108,8 +109,8 @@ export const PrimaryTools = React.memo(function PrimaryTools() {
         id="TD-PrimaryTools-ArrowTopRight"
       >
         <ArrowTopRightIcon />
-      </ToolButtonWithTooltip>
-      <ToolButtonWithTooltip
+      </ToolButtonWithTooltip> */}
+      {/* <ToolButtonWithTooltip
         kbd={'9'}
         label={intl.formatMessage({ id: 'text' })}
         onClick={selectTextTool}
@@ -129,15 +130,15 @@ export const PrimaryTools = React.memo(function PrimaryTools() {
         id="TD-PrimaryTools-Pencil2"
       >
         <Pencil2Icon />
-      </ToolButtonWithTooltip>
-      <ToolButtonWithTooltip
+      </ToolButtonWithTooltip> */}
+      {/* <ToolButtonWithTooltip
         label={intl.formatMessage({ id: 'image' })}
         onClick={uploadMedias}
         id="TD-PrimaryTools-Image"
         variant="primary"
       >
         <ImageIcon />
-      </ToolButtonWithTooltip>
+      </ToolButtonWithTooltip> */}
     </StyledPanel>
   )
 })
