@@ -114,7 +114,7 @@ export interface TDSnapshot {
     disableAssets: boolean
     selectByContain?: boolean
     isRunningModel: boolean
-    prompt: string
+    isDiffusionParamsOpen: boolean
   }
   document: TDDocument
   room?: {
@@ -136,6 +136,16 @@ export interface TDFile {
   assets: Record<string, unknown>
 }
 
+export interface DiffusionParams {
+  id: string
+  prompt: string
+  steps: number
+  guidanceScale: number
+  negativePrompt: string
+  width: number
+  height: number
+}
+
 // The shape of the Tldraw document
 export interface TDDocument {
   id: string
@@ -143,6 +153,7 @@ export interface TDDocument {
   version: number
   pages: Record<string, TDPage>
   pageStates: Record<string, TLPageState>
+  pageDiffusionParams: Record<string, DiffusionParams>
   assets: TDAssets
 }
 

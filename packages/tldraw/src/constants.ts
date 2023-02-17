@@ -3,7 +3,7 @@ import type { Easing } from '~types'
 export const LETTER_SPACING = '-0.03em'
 export const LINE_HEIGHT = 1
 export const GRID_SIZE = 8
-export const SVG_EXPORT_PADDING = 16
+export const SVG_EXPORT_PADDING = 0
 export const BINDING_DISTANCE = 16
 export const CLONING_DISTANCE = 32
 export const FIT_TO_SCREEN_PADDING = 128
@@ -18,6 +18,16 @@ export const LABEL_POINT = [0.5, 0.5]
 export const PI2 = Math.PI * 2
 
 export const FILE_EXTENSION = '.tldr'
+
+export const DEFAULT_DIFFUSION_PARAMS = {
+  prompt: 'best quality, extremely detailed',
+  negativePrompt:
+    'lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality',
+  steps: 20,
+  guidanceScale: 9,
+  width: 512,
+  height: 512,
+}
 
 export const EASINGS: Record<Easing, (t: number) => number> = {
   linear: (t) => t,

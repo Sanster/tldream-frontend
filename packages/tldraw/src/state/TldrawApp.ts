@@ -15,6 +15,7 @@ import {
 } from '@tldraw/core'
 import { Vec } from '@tldraw/vec'
 import {
+  DEFAULT_DIFFUSION_PARAMS,
   FIT_TO_SCREEN_PADDING,
   GRID_SIZE,
   IMAGE_EXTENSIONS,
@@ -342,6 +343,7 @@ export class TldrawApp extends StateManager<TDSnapshot> {
           // If page is undefined, delete the page and pagestate
           delete next.document.pages[pageId]
           delete next.document.pageStates[pageId]
+          delete next.document.pageDiffusionParams[pageId]
           return
         }
 
@@ -1073,6 +1075,21 @@ export class TldrawApp extends StateManager<TDSnapshot> {
     const patch = { appState: { isMenuOpen: isOpen } }
     this.patchState(patch, 'ui:toggled_menu_opened')
     this.persist(patch)
+    return this
+  }
+
+  /**
+   * Toggles the state if DiffusionParams is opened
+   */
+  setDiffusionParamsOpen = (isOpen: boolean): this => {
+    const patch = { appState: { isDiffusionParamsOpen: isOpen } }
+    this.patchState(patch, 'ui:toggled_difusionparams_opened')
+    this.persist(patch)
+    return this
+  }
+
+  toggleDiffusionParamsOpen = (): this => {
+    this.setDiffusionParamsOpen(!this.appState.isDiffusionParamsOpen)
     return this
   }
 
@@ -4149,6 +4166,93 @@ export class TldrawApp extends StateManager<TDSnapshot> {
     }
   }
 
+  setPrompt = (prompt: string) => {
+    this.patchState({
+      document: {
+        pageDiffusionParams: {
+          [this.appState.currentPageId]: {
+            prompt,
+          },
+        },
+      },
+    })
+  }
+
+  setSteps = (value: string) => {
+    value = value.replace(/\D/g, '')
+    const steps = value.length === 0 ? 0 : parseInt(value, 10)
+    this.patchState({
+      document: {
+        pageDiffusionParams: {
+          [this.appState.currentPageId]: {
+            steps,
+          },
+        },
+      },
+    })
+  }
+
+  setGuidanceScale = (value: string) => {
+    value = value.replace(/\D/g, '')
+    const guidanceScale = value.length === 0 ? 0 : parseInt(value, 10)
+    this.patchState({
+      document: {
+        pageDiffusionParams: {
+          [this.appState.currentPageId]: {
+            guidanceScale,
+          },
+        },
+      },
+    })
+  }
+
+  setNegativePrompt = (negativePrompt: string) => {
+    this.patchState({
+      document: {
+        pageDiffusionParams: {
+          [this.appState.currentPageId]: {
+            negativePrompt,
+          },
+        },
+      },
+    })
+  }
+
+  setGenerateWidthHeight = (width: number, height: number) => {
+    this.patchState({
+      document: {
+        pageDiffusionParams: {
+          [this.appState.currentPageId]: {
+            width,
+            height,
+          },
+        },
+      },
+    })
+  }
+
+  swapGenerateWidthHeight = () => {
+    const currentParams = this.document.pageDiffusionParams[this.appState.currentPageId]
+    this.patchState({
+      document: {
+        pageDiffusionParams: {
+          [this.appState.currentPageId]: {
+            width: currentParams.height,
+            height: currentParams.width,
+          },
+        },
+      },
+    })
+  }
+
+  setIsRunningModel = (value: boolean) => {
+    this.patchState({
+      appState: {
+        isRunningModel: value,
+      },
+    })
+  }
+
   get room() {
     return this.state.room
   }
@@ -4210,6 +4314,12 @@ export class TldrawApp extends StateManager<TDSnapshot> {
         },
       },
     },
+    pageDiffusionParams: {
+      page: {
+        id: 'page',
+        ...DEFAULT_DIFFUSION_PARAMS,
+      },
+    },
     assets: {},
   }
 
@@ -4248,7 +4358,7 @@ export class TldrawApp extends StateManager<TDSnapshot> {
       isLoading: false,
       disableAssets: false,
       isRunningModel: false,
-      prompt: 'masterpiece, best quality',
+      isDiffusionParamsOpen: false,
     },
     document: TldrawApp.defaultDocument,
   }

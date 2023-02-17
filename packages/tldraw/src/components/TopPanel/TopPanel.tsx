@@ -1,15 +1,17 @@
+import { PlayIcon } from '@radix-ui/react-icons'
 import * as React from 'react'
 import { useIntl } from 'react-intl'
 import { Input } from '~components/Primitives/AlertDialog'
-import { Panel } from '~components/Primitives/Panel'
 import { ToolButton, ToolButtonWithTooltip } from '~components/Primitives/ToolButton'
 import { UndoIcon } from '~components/Primitives/icons'
 import { useTldrawApp } from '~hooks'
+import { TLDR } from '~state/TLDR'
 import { styled } from '~styles'
-import { TDExportType, TDShapeType } from '~types'
+import { TDExportType, TDShapeType, TDSnapshot } from '~types'
 import { Menu } from './Menu/Menu'
 import { MultiplayerMenu } from './MultiplayerMenu'
 import { PageMenu } from './PageMenu'
+import { ParamsMenu } from './ParamsMenu'
 import { StyleMenu } from './StyleMenu'
 import { ZoomMenu } from './ZoomMenu'
 
@@ -22,6 +24,9 @@ interface TopPanelProps {
   showMultiplayerMenu: boolean
 }
 
+const currentPageParamsSelector = (s: TDSnapshot) =>
+  s.document.pageDiffusionParams[s.appState.currentPageId]
+
 export function _TopPanel({
   readOnly,
   showPages,
@@ -32,24 +37,22 @@ export function _TopPanel({
 }: TopPanelProps) {
   const app = useTldrawApp()
   const intl = useIntl()
-  const [prompt, setPrompt] = React.useState(app.appState.prompt)
+  const isRunningModel = app.useStore((s) => s.appState.isRunningModel)
+
+  const diffusionParams = app.useStore(currentPageParamsSelector)
 
   const onDreamButtonClick = React.useCallback(() => {
-    const shapes = app.getShapes()
-    const ids = shapes
-      .filter(
-        (s) =>
-          s.type !== TDShapeType.Image &&
-          s.type !== TDShapeType.Video &&
-          s.type !== TDShapeType.Sticky
-      )
-      .map((s) => s.id)
+    if (isRunningModel) {
+      return
+    }
+    const strokeShapes = TLDR.getAllStrokeShapes(app.state)
+    const ids = strokeShapes.map((s) => s.id)
     app.runControlNet(TDExportType.JPG, { scale: 2, quality: 1, ids: ids })
-  }, [app])
+  }, [app, isRunningModel])
 
   const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trimStart()
-    setPrompt(value)
+    app.setPrompt(value)
   }, [])
 
   const handleTextFieldKeyDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -72,21 +75,22 @@ export function _TopPanel({
       )}
       <StyledPromptWrapper>
         <Input
-          style={{ width: 600 }}
-          placeholder="Prompt"
-          value={prompt}
+          style={{ width: 600, height: 32 }}
+          placeholder="Describe what you have drawed..."
+          value={diffusionParams.prompt}
           onChange={handleChange}
           onKeyDown={handleTextFieldKeyDown}
         />
-        <ToolButtonWithTooltip
-          label="dream"
+        <ToolButton
           onClick={onDreamButtonClick}
-          isActive={false}
-          variant="text"
+          isActive={true}
+          variant="dreambtn"
           id="TD-PrimaryTools-Dream"
+          disabled={isRunningModel}
         >
           Dream
-        </ToolButtonWithTooltip>
+        </ToolButton>
+        <ParamsMenu />
       </StyledPromptWrapper>
       {(showStyles || showZoom) && (
         <SubPanel side="right">
@@ -126,7 +130,7 @@ const StyledPromptWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  gap: 12,
+  gap: 4,
 })
 
 const StyledTopPanel = styled('div', {

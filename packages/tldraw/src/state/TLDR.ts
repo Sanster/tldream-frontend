@@ -91,6 +91,24 @@ export class TLDR {
     )
   }
 
+  static getAllStrokeShapes(data: TDSnapshot): TDShape[] {
+    // return TLDR.getShapes(data, pageId).filter((shape) => shape.strokeWidth > 0)
+    const shapes = TLDR.getShapes(data, data.appState.currentPageId)
+    return shapes.filter(
+      (s) =>
+        s.type !== TDShapeType.Image &&
+        s.type !== TDShapeType.Video &&
+        s.type !== TDShapeType.Sticky
+    )
+  }
+
+  static getAllStrokeBounds(data: TDSnapshot): TLBounds {
+    const strokeShapes = TLDR.getAllStrokeShapes(data)
+    return Utils.getCommonBounds(
+      strokeShapes.map((shape) => TLDR.getShapeUtil(shape).getBounds(shape))
+    )
+  }
+
   static getParentId(data: TDSnapshot, id: string, pageId: string) {
     return TLDR.getShape(data, id, pageId).parentId
   }

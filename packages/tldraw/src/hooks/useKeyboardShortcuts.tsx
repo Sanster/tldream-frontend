@@ -16,42 +16,42 @@ export function useKeyboardShortcuts(ref: React.RefObject<HTMLDivElement>) {
     [ref]
   )
 
-  React.useEffect(() => {
-    if (!app) return
+  // React.useEffect(() => {
+  //   if (!app) return
 
-    const handleCut = (e: ClipboardEvent) => {
-      if (!canHandleEvent(true)) return
+  //   const handleCut = (e: ClipboardEvent) => {
+  //     if (!canHandleEvent(true)) return
 
-      if (app.readOnly) {
-        app.copy(undefined, e)
-        return
-      }
+  //     if (app.readOnly) {
+  //       app.copy(undefined, e)
+  //       return
+  //     }
 
-      app.cut(undefined, e)
-    }
+  //     app.cut(undefined, e)
+  //   }
 
-    const handleCopy = (e: ClipboardEvent) => {
-      if (!canHandleEvent(true)) return
+  //   const handleCopy = (e: ClipboardEvent) => {
+  //     if (!canHandleEvent(true)) return
 
-      app.copy(undefined, e)
-    }
+  //     app.copy(undefined, e)
+  //   }
 
-    const handlePaste = (e: ClipboardEvent) => {
-      if (!canHandleEvent(true)) return
-      if (app.readOnly) return
+  //   const handlePaste = (e: ClipboardEvent) => {
+  //     if (!canHandleEvent(true)) return
+  //     if (app.readOnly) return
 
-      app.paste(undefined, e)
-    }
+  //     app.paste(undefined, e)
+  //   }
 
-    document.addEventListener('cut', handleCut)
-    document.addEventListener('copy', handleCopy)
-    document.addEventListener('paste', handlePaste)
-    return () => {
-      document.removeEventListener('cut', handleCut)
-      document.removeEventListener('copy', handleCopy)
-      document.removeEventListener('paste', handlePaste)
-    }
-  }, [app])
+  //   document.addEventListener('cut', handleCut)
+  //   document.addEventListener('copy', handleCopy)
+  //   document.addEventListener('paste', handlePaste)
+  //   return () => {
+  //     document.removeEventListener('cut', handleCut)
+  //     document.removeEventListener('copy', handleCopy)
+  //     document.removeEventListener('paste', handlePaste)
+  //   }
+  // }, [app])
 
   /* ---------------------- Tools --------------------- */
 
@@ -124,31 +124,41 @@ export function useKeyboardShortcuts(ref: React.RefObject<HTMLDivElement>) {
     [app]
   )
 
-  useHotkeys(
-    'a,8',
-    () => {
-      if (!canHandleEvent(true)) return
-      app.selectTool(TDShapeType.Arrow)
-    },
-    undefined,
-    [app]
-  )
+  // useHotkeys(
+  //   'a,8',
+  //   () => {
+  //     if (!canHandleEvent(true)) return
+  //     app.selectTool(TDShapeType.Arrow)
+  //   },
+  //   undefined,
+  //   [app]
+  // )
+
+  // useHotkeys(
+  //   't,9',
+  //   () => {
+  //     if (!canHandleEvent(true)) return
+  //     app.selectTool(TDShapeType.Text)
+  //   },
+  //   undefined,
+  //   [app]
+  // )
+
+  // useHotkeys(
+  //   's,0',
+  //   () => {
+  //     if (!canHandleEvent(true)) return
+  //     app.selectTool(TDShapeType.Sticky)
+  //   },
+  //   undefined,
+  //   [app]
+  // )
 
   useHotkeys(
-    't,9',
+    's',
     () => {
       if (!canHandleEvent(true)) return
-      app.selectTool(TDShapeType.Text)
-    },
-    undefined,
-    [app]
-  )
-
-  useHotkeys(
-    's,0',
-    () => {
-      if (!canHandleEvent(true)) return
-      app.selectTool(TDShapeType.Sticky)
+      app.toggleDiffusionParamsOpen()
     },
     undefined,
     [app]

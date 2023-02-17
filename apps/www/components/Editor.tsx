@@ -1,4 +1,14 @@
-import { TDExport, TLDR, Tldraw, TldrawApp, TldrawProps, useFileSystem } from '@tldraw/tldraw'
+import {
+  DiffusionParams,
+  TDExport,
+  TDSnapshot,
+  TLDR,
+  Tldraw,
+  TldrawApp,
+  TldrawProps,
+  useFileSystem,
+} from '@tldraw/tldraw'
+import Vec from '@tldraw/vec'
 import * as React from 'react'
 import { useUploadAssets } from '~hooks/useUploadAssets'
 import * as gtag from '~utils/gtag'
@@ -7,10 +17,6 @@ declare const window: Window & { app: TldrawApp }
 
 const API_ENDPOINT = ''
 
-interface DiffusionParams {
-  prompt: string
-}
-
 async function runModel(imageBlob: Blob, params: DiffusionParams) {
   const imageFile = new File([imageBlob], 'image', {
     type: 'image/jpeg',
@@ -18,6 +24,12 @@ async function runModel(imageBlob: Blob, params: DiffusionParams) {
   const fd = new FormData()
   fd.append('image', imageFile)
   fd.append('prompt', params.prompt)
+  fd.append('steps', params.steps.toString())
+  fd.append('guidance_scale', params.guidanceScale.toString())
+  fd.append('negative_prompt', params.negativePrompt.toString())
+  fd.append('width', params.width.toString())
+  fd.append('height', params.height.toString())
+
   try {
     const res = await fetch(`http://127.0.0.1:4242/run`, {
       method: 'POST',
@@ -58,22 +70,21 @@ const Editor = ({ id = 'home', ...rest }: EditorProps & Partial<TldrawProps>) =>
   const { onAssetUpload } = useUploadAssets()
 
   const onRunControlNet = async (app: TldrawApp, info: TDExport) => {
-    const res = await runModel(info.blob, {
-      prompt: app.state.appState.prompt,
-    })
+    app.setIsRunningModel(true)
+    // TOOD: 添加模型推理 step 进度
+    const res = await runModel(
+      info.blob,
+      app.document.pageDiffusionParams[app.appState.currentPageId]
+    )
     const resFile = new File([res.blob], 'image.jpeg', {
       type: 'image/jpeg',
     })
-    // app.selectAll()
-    // const bounds = TLDR.getSelectedBounds(app.state)
-    // const centerX = bounds.maxX + bounds.width / 2
-    // const centerY = (bounds.minY + bounds.maxY) / 2
-    // TODO: place the result to a better position
-    // TODO: replace export padding, but keep padding used in onRunControlNet
-
-    // TOOD: 添加推理参数输入框
-    // TOOD: 添加模型推理 step 进度
+    // const bounds = TLDR.getAllStrokeBounds(app.state)
+    // const x = bounds.maxX + bounds.width / 2
+    // const y = bounds.minY + bounds.height / 2
+    // TODO: place to a better position
     app.addMediaFromFiles([resFile])
+    app.setIsRunningModel(false)
   }
 
   return (

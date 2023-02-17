@@ -11,7 +11,7 @@ export interface ToolButtonProps {
   disabled?: boolean
   isActive?: boolean
   isToolLocked?: boolean
-  variant?: 'icon' | 'text' | 'circle' | 'primary'
+  variant?: 'icon' | 'text' | 'dreambtn' | 'circle' | 'primary'
   children: React.ReactNode
   id?: string
   onKeyDown?: React.KeyboardEventHandler<HTMLButtonElement>
@@ -61,7 +61,7 @@ interface ToolButtonWithTooltipProps extends ToolButtonProps {
   label: string
   isLocked?: boolean
   kbd?: string
-  variant?: 'icon' | 'text' | 'circle' | 'primary'
+  variant?: 'icon' | 'text' | 'dreambtn' | 'circle' | 'primary'
 }
 
 export function ToolButtonWithTooltip({
@@ -137,6 +137,7 @@ export const StyledToolButton = styled('button', {
 
   [`&:disabled ${StyledToolButtonInner}`]: {
     opacity: 0.618,
+    cursor: 'not-allowed',
   },
 
   variants: {
@@ -155,6 +156,15 @@ export const StyledToolButton = styled('button', {
       },
       text: {
         width: 'auto',
+        [`& ${StyledToolButtonInner}`]: {
+          fontSize: '$1',
+          padding: '0 $3',
+          gap: '$3',
+        },
+      },
+      dreambtn: {
+        width: 'auto',
+        height: '32px',
         [`& ${StyledToolButtonInner}`]: {
           fontSize: '$1',
           padding: '0 $3',

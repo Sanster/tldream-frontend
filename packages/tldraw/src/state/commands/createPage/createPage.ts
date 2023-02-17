@@ -1,7 +1,8 @@
 import { TLPageState, Utils } from '@tldraw/core'
+import { DEFAULT_DIFFUSION_PARAMS } from '~constants'
 import type { TldrawApp } from '~state'
 import { getIncrementedName } from '~state/commands/shared'
-import type { TDPage, TldrawCommand } from '~types'
+import type { DiffusionParams, TDPage, TldrawCommand } from '~types'
 
 export function createPage(
   app: TldrawApp,
@@ -40,6 +41,11 @@ export function createPage(
     pointedId: undefined,
   }
 
+  const pageDiffusionParams: DiffusionParams = {
+    id: pageId,
+    ...DEFAULT_DIFFUSION_PARAMS,
+  }
+
   return {
     id: 'create_page',
     before: {
@@ -65,6 +71,9 @@ export function createPage(
         },
         pageStates: {
           [pageId]: pageState,
+        },
+        pageDiffusionParams: {
+          [pageId]: pageDiffusionParams,
         },
       },
     },
