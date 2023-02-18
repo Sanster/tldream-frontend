@@ -23,7 +23,7 @@ export const DEFAULT_DIFFUSION_PARAMS = {
   prompt: 'best quality, extremely detailed',
   negativePrompt:
     'lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality',
-  steps: 20,
+  steps: 15,
   guidanceScale: 9,
   width: 512,
   height: 512,
