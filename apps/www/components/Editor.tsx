@@ -1,17 +1,13 @@
 import {
   DiffusionParams,
   TDExport,
-  TDSnapshot,
-  TLDR,
   Tldraw,
   TldrawApp,
   TldrawProps,
   useFileSystem,
 } from '@tldraw/tldraw'
-import Vec from '@tldraw/vec'
 import * as React from 'react'
 import { useUploadAssets } from '~hooks/useUploadAssets'
-import * as gtag from '~utils/gtag'
 
 declare const window: Window & { app: TldrawApp }
 
@@ -55,16 +51,6 @@ const Editor = ({ id = 'home', ...rest }: EditorProps & Partial<TldrawProps>) =>
     window.app = app
   }, [])
 
-  // Send events to gtag as actions.
-  const handlePersist = React.useCallback((_app: TldrawApp, reason?: string) => {
-    gtag.event({
-      action: reason ?? '',
-      category: 'editor',
-      label: reason ?? 'persist',
-      value: 0,
-    })
-  }, [])
-
   const fileSystemEvents = useFileSystem()
 
   const { onAssetUpload } = useUploadAssets()
@@ -98,7 +84,6 @@ const Editor = ({ id = 'home', ...rest }: EditorProps & Partial<TldrawProps>) =>
         id={id}
         autofocus
         onMount={handleMount}
-        onPersist={handlePersist}
         onAssetUpload={onAssetUpload}
         disableAssets={true}
         showMenu={false}

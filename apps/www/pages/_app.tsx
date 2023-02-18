@@ -2,16 +2,13 @@ import '@fontsource/recursive'
 import Head from 'next/head'
 import type React from 'react'
 import '~styles/globals.css'
-import useGtag from '~utils/useGtag'
 
-const APP_NAME = 'tldraw'
-const APP_DESCRIPTION = 'A tiny little drawing app.'
-const APP_URL = 'https://tldraw.com'
-const IMAGE = 'https://tldraw.com/social-image.png'
+const APP_NAME = 'tldream'
+const APP_DESCRIPTION = 'A tiny little diffusion drawing app.'
+const APP_URL = 'https://github.com/Sanster/tldream'
+const IMAGE = 'https://github.com/Sanster/tldream-frontend/blob/tldream/assets/tldream.png'
 
 function MyApp({ Component, pageProps }: any) {
-  useGtag()
-
   return (
     <>
       <Head>
@@ -28,8 +25,8 @@ function MyApp({ Component, pageProps }: any) {
         <meta name="twitter:title" content={APP_NAME} />
         <meta name="twitter:description" content={APP_DESCRIPTION} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@tldraw" />
-        <meta name="twitter:site" content="@tldraw" />
+        <meta name="twitter:creator" content="@tldream" />
+        <meta name="twitter:site" content="@tldream" />
         <meta name="twitter:image" content={IMAGE} />
 
         <meta property="og:type" content="website" />
@@ -48,7 +45,7 @@ function MyApp({ Component, pageProps }: any) {
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
 
-        <title>tldraw</title>
+        <title>tldream</title>
       </Head>
       <Component {...pageProps} />
     </>
