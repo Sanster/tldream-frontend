@@ -1,4 +1,4 @@
-# tldream
+<h1 align="center">tldream</h1>
 
 Frontend code of [tldream](https://github.com/Sanster/tldream)
 
