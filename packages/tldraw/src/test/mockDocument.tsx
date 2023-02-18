@@ -1,3 +1,4 @@
+import { DEFAULT_DIFFUSION_PARAMS } from '~constants'
 import { ColorStyle, DashStyle, SizeStyle, TDDocument, TDShapeType } from '~types'
 
 export const mockDocument: TDDocument = {
@@ -67,6 +68,12 @@ export const mockDocument: TDDocument = {
         point: [0, 0],
         zoom: 1,
       },
+    },
+  },
+  pageDiffusionParams: {
+    page1: {
+      id: 'page1',
+      ...DEFAULT_DIFFUSION_PARAMS,
     },
   },
   assets: {},

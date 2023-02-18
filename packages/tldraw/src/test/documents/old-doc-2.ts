@@ -16752,6 +16752,7 @@ export default {
       },
     },
   },
+  pageDiffusionParams: {},
   pageState: {
     boundsRotation: 0,
   },

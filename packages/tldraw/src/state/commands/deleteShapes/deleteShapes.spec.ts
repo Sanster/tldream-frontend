@@ -229,6 +229,7 @@ const mockDocumentWithImage: TDDocument = {
       },
     },
   },
+  pageDiffusionParams: {},
   assets: {
     asset1: {
       type: TDAssetType.Image,
@@ -292,6 +293,7 @@ const mockDocumentWithSharedAssets: TDDocument = {
       },
     },
   },
+  pageDiffusionParams: {},
   assets: {
     '123': {
       type: TDAssetType.Image,

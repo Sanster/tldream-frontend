@@ -15566,6 +15566,7 @@ export default {
       editingId: null,
     },
   },
+  pageDiffusionParams: {},
   pageState: {
     boundsRotation: 0,
   },

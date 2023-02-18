@@ -1,3 +1,4 @@
+import { DEFAULT_DIFFUSION_PARAMS } from '~constants'
 import { ColorStyle, DashStyle, SizeStyle, TDDocument, TDShapeType } from '~types'
 
 export const badDocument: TDDocument = {
@@ -66,6 +67,12 @@ export const badDocument: TDDocument = {
         point: [0, 0],
         zoom: 1,
       },
+    },
+  },
+  pageDiffusionParams: {
+    page1: {
+      id: 'page1',
+      ...DEFAULT_DIFFUSION_PARAMS,
     },
   },
   assets: {},

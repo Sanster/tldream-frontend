@@ -46,6 +46,7 @@ const textDoc: TDDocument = {
       },
     },
   },
+  pageDiffusionParams: {},
   assets: {},
 }
 

@@ -113,6 +113,17 @@ TldrawTestApp {
       "assets": Object {},
       "id": "doc",
       "name": "New Document",
+      "pageDiffusionParams": Object {
+        "page1": Object {
+          "guidanceScale": 9,
+          "height": 512,
+          "id": "page1",
+          "negativePrompt": "lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
+          "prompt": "best quality, extremely detailed",
+          "steps": 20,
+          "width": 512,
+        },
+      },
       "pageStates": Object {
         "page1": Object {
           "bindingId": undefined,
