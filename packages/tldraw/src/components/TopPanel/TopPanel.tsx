@@ -14,6 +14,7 @@ import { PageMenu } from './PageMenu'
 import { ParamsMenu } from './ParamsMenu'
 import { StyleMenu } from './StyleMenu'
 import { ZoomMenu } from './ZoomMenu'
+import DiffusionStepsDialog from './DiffusionStepsDialog/DiffusionStepsDialog'
 
 interface TopPanelProps {
   readOnly: boolean
@@ -37,7 +38,7 @@ export function _TopPanel({
 }: TopPanelProps) {
   const app = useTldrawApp()
   const intl = useIntl()
-  const isRunningModel = app.useStore((s) => s.appState.isRunningModel)
+  const isRunningModel = app.useStore(s => s.appState.isRunningModel)
 
   const diffusionParams = app.useStore(currentPageParamsSelector)
 
@@ -46,7 +47,7 @@ export function _TopPanel({
       return
     }
     const strokeShapes = TLDR.getAllStrokeShapes(app.state)
-    const ids = strokeShapes.map((s) => s.id)
+    const ids = strokeShapes.map(s => s.id)
     app.runControlNet(TDExportType.JPG, { scale: 2, quality: 1, ids: ids })
   }, [app, isRunningModel])
 
@@ -66,6 +67,7 @@ export function _TopPanel({
 
   return (
     <StyledTopPanel>
+      <DiffusionStepsDialog />
       {(showMenu || showPages) && (
         <SubPanel side="left">
           {showMenu && <Menu readOnly={readOnly} />}

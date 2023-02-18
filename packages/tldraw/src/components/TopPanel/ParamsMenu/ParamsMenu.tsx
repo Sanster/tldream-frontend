@@ -141,7 +141,7 @@ const ParamsDialog = ({ isOpen, onClose }: ParamsDialogProps) => {
           <ActionWrapper>
             <Dialog.Action asChild>
               <Button css={{ backgroundColor: '#2F80ED', color: 'White' }} onClick={onClose}>
-                <FormattedMessage id="Close" />
+                Close
               </Button>
             </Dialog.Action>
           </ActionWrapper>

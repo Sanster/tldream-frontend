@@ -72,19 +72,24 @@ const Editor = ({ id = 'home', ...rest }: EditorProps & Partial<TldrawProps>) =>
   const onRunControlNet = async (app: TldrawApp, info: TDExport) => {
     app.setIsRunningModel(true)
     // TOOD: 添加模型推理 step 进度
-    const res = await runModel(
-      info.blob,
-      app.document.pageDiffusionParams[app.appState.currentPageId]
-    )
-    const resFile = new File([res.blob], 'image.jpeg', {
-      type: 'image/jpeg',
-    })
-    // const bounds = TLDR.getAllStrokeBounds(app.state)
-    // const x = bounds.maxX + bounds.width / 2
-    // const y = bounds.minY + bounds.height / 2
-    // TODO: place to a better position
-    app.addMediaFromFiles([resFile])
-    app.setIsRunningModel(false)
+    try {
+      const res = await runModel(
+        info.blob,
+        app.document.pageDiffusionParams[app.appState.currentPageId]
+      )
+      const resFile = new File([res.blob], 'image.jpeg', {
+        type: 'image/jpeg',
+      })
+      // const bounds = TLDR.getAllStrokeBounds(app.state)
+      // const x = bounds.maxX + bounds.width / 2
+      // const y = bounds.minY + bounds.height / 2
+      // TODO: place to a better position
+      app.addMediaFromFiles([resFile])
+    } catch (error) {
+      console.log(error)
+    } finally {
+      app.setIsRunningModel(false)
+    }
   }
 
   return (

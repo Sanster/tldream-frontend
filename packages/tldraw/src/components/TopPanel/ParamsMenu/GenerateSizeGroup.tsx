@@ -42,13 +42,13 @@ const GenerateSizeGroup = (props: Props) => {
       aria-label="Image Ratio"
       onValueChange={handleChange}
     >
-      {Object.values(ImageRatio).map((ratio) => {
+      {Object.values(ImageRatio).map(ratio => {
         let swapedRatio = ratio
         if (direction === ImageDirection.HORIZONTAL) {
           swapedRatio = swapRatio(ratio)
         }
         return (
-          <ToggleGroupItem value={swapedRatio} aria-label={swapedRatio}>
+          <ToggleGroupItem value={swapedRatio} aria-label={swapedRatio} key={swapedRatio}>
             {swapedRatio}
           </ToggleGroupItem>
         )
