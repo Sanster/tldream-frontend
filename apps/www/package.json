@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next export",
     "start": "next start",
     "lint": "TIMING=1 next lint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
