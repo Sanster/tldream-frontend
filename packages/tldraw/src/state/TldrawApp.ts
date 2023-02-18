@@ -2152,28 +2152,28 @@ export class TldrawApp extends StateManager<TDSnapshot> {
     const lightBackground = 'rgb(255, 255, 255)'
     svg.style.setProperty('background-color', lightBackground)
 
-    // switch (exportBackground) {
-    //   case TDExportBackground.Auto: {
-    //     svg.style.setProperty(
-    //       'background-color',
-    //       this.settings.isDarkMode ? darkBackground : lightBackground
-    //     )
-    //     break
-    //   }
-    //   case TDExportBackground.Dark: {
-    //     svg.style.setProperty('background-color', darkBackground)
-    //     break
-    //   }
-    //   case TDExportBackground.Light: {
-    //     svg.style.setProperty('background-color', lightBackground)
-    //     break
-    //   }
-    //   case TDExportBackground.Transparent:
-    //   default: {
-    //     svg.style.setProperty('background-color', 'transparent')
-    //     break
-    //   }
-    // }
+    switch (exportBackground) {
+      case TDExportBackground.Auto: {
+        svg.style.setProperty(
+          'background-color',
+          this.settings.isDarkMode ? darkBackground : lightBackground
+        )
+        break
+      }
+      case TDExportBackground.Dark: {
+        svg.style.setProperty('background-color', darkBackground)
+        break
+      }
+      case TDExportBackground.Light: {
+        svg.style.setProperty('background-color', lightBackground)
+        break
+      }
+      case TDExportBackground.Transparent:
+      default: {
+        svg.style.setProperty('background-color', lightBackground)
+        break
+      }
+    }
 
     svg
       .querySelectorAll('.tl-fill-hitarea, .tl-stroke-hitarea, .tl-binding-indicator')

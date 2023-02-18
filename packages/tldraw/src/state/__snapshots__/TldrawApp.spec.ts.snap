@@ -17,9 +17,11 @@ TldrawTestApp {
       "disableAssets": false,
       "eraseLine": Array [],
       "hoveredId": undefined,
+      "isDiffusionParamsOpen": false,
       "isEmptyCanvas": false,
       "isLoading": false,
       "isMenuOpen": false,
+      "isRunningModel": false,
       "isToolLocked": false,
       "snapLines": Array [],
       "status": "idle",
@@ -28,6 +30,17 @@ TldrawTestApp {
       "assets": Object {},
       "id": "doc",
       "name": "New Document",
+      "pageDiffusionParams": Object {
+        "page": Object {
+          "guidanceScale": 9,
+          "height": 512,
+          "id": "page",
+          "negativePrompt": "lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
+          "prompt": "best quality, extremely detailed",
+          "steps": 20,
+          "width": 512,
+        },
+      },
       "pageStates": Object {
         "page": Object {
           "camera": Object {
@@ -87,9 +100,11 @@ TldrawTestApp {
       "disableAssets": false,
       "eraseLine": Array [],
       "hoveredId": undefined,
+      "isDiffusionParamsOpen": false,
       "isEmptyCanvas": false,
       "isLoading": false,
       "isMenuOpen": false,
+      "isRunningModel": false,
       "isToolLocked": false,
       "snapLines": Array [],
       "status": "idle",
@@ -342,9 +357,11 @@ TldrawTestApp {
       "disableAssets": false,
       "eraseLine": Array [],
       "hoveredId": undefined,
+      "isDiffusionParamsOpen": false,
       "isEmptyCanvas": false,
       "isLoading": false,
       "isMenuOpen": false,
+      "isRunningModel": false,
       "isToolLocked": false,
       "snapLines": Array [],
       "status": "idle",
@@ -353,6 +370,17 @@ TldrawTestApp {
       "assets": Object {},
       "id": "doc",
       "name": "New Document",
+      "pageDiffusionParams": Object {
+        "page": Object {
+          "guidanceScale": 9,
+          "height": 512,
+          "id": "page",
+          "negativePrompt": "lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
+          "prompt": "best quality, extremely detailed",
+          "steps": 20,
+          "width": 512,
+        },
+      },
       "pageStates": Object {
         "page": Object {
           "camera": Object {
@@ -539,6 +567,7 @@ TldrawTestApp {
     ],
     "selectedIds": Array [],
   },
+  "runControlNet": [Function],
   "saveProject": [Function],
   "saveProjectAs": [Function],
   "select": [Function],
@@ -558,16 +587,23 @@ TldrawTestApp {
   "selectTool": [Function],
   "session": undefined,
   "setCamera": [Function],
+  "setDiffusionParamsOpen": [Function],
   "setDisableAssets": [Function],
   "setEditingId": [Function],
+  "setGenerateWidthHeight": [Function],
+  "setGuidanceScale": [Function],
   "setHoveredId": [Function],
   "setIsLoading": [Function],
+  "setIsRunningModel": [Function],
   "setMenuOpen": [Function],
+  "setNegativePrompt": [Function],
+  "setPrompt": [Function],
   "setSelectedIds": [Function],
   "setSetting": [Function],
   "setShapeProps": [Function],
   "setSnapshot": [Function],
   "setState": [Function],
+  "setSteps": [Function],
   "shiftKey": false,
   "signOut": [Function],
   "spaceKey": false,
@@ -582,10 +618,12 @@ TldrawTestApp {
   },
   "stretch": [Function],
   "style": [Function],
+  "swapGenerateWidthHeight": [Function],
   "toggleAspectRatioLocked": [Function],
   "toggleDarkMode": [Function],
   "toggleDebugMode": [Function],
   "toggleDecoration": [Function],
+  "toggleDiffusionParamsOpen": [Function],
   "toggleFocusMode": [Function],
   "toggleGrid": [Function],
   "toggleHidden": [Function],
@@ -972,8 +1010,8 @@ Array [
 ]
 `;
 
-exports[`TldrawTestApp When copying to SVG Copies grouped shapes.: copied svg with group 1`] = `"<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 232 232\\" width=\\"232\\" height=\\"232\\" style=\\"background-color: transparent;\\"><defs><style>@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&amp;family=Source+Code+Pro&amp;family=Source+Sans+Pro&amp;family=Crimson+Pro&amp;display=block');</style></defs><g/></svg>"`;
+exports[`TldrawTestApp When copying to SVG Copies grouped shapes.: copied svg with group 1`] = `"<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 200 200\\" width=\\"200\\" height=\\"200\\" style=\\"background-color: rgb(255, 255, 255);\\"><defs><style>@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&amp;family=Source+Code+Pro&amp;family=Source+Sans+Pro&amp;family=Crimson+Pro&amp;display=block');</style></defs><g/></svg>"`;
 
-exports[`TldrawTestApp When copying to SVG Copies shapes.: copied svg 1`] = `"<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 236.74 236.74\\" width=\\"236.74\\" height=\\"236.74\\" style=\\"background-color: transparent;\\"><defs><style>@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&amp;family=Source+Code+Pro&amp;family=Source+Sans+Pro&amp;family=Crimson+Pro&amp;display=block');</style></defs></svg>"`;
+exports[`TldrawTestApp When copying to SVG Copies shapes.: copied svg 1`] = `"<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 204.74 204.74\\" width=\\"204.74\\" height=\\"204.74\\" style=\\"background-color: rgb(255, 255, 255);\\"><defs><style>@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&amp;family=Source+Code+Pro&amp;family=Source+Sans+Pro&amp;family=Crimson+Pro&amp;display=block');</style></defs></svg>"`;
 
-exports[`TldrawTestApp When copying to SVG Respects child index: copied svg with reordered elements 1`] = `"<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 232 232\\" width=\\"232\\" height=\\"232\\" style=\\"background-color: transparent;\\"><defs><style>@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&amp;family=Source+Code+Pro&amp;family=Source+Sans+Pro&amp;family=Crimson+Pro&amp;display=block');</style></defs></svg>"`;
+exports[`TldrawTestApp When copying to SVG Respects child index: copied svg with reordered elements 1`] = `"<svg xmlns=\\"http://www.w3.org/2000/svg\\" viewBox=\\"0 0 200 200\\" width=\\"200\\" height=\\"200\\" style=\\"background-color: rgb(255, 255, 255);\\"><defs><style>@import url('https://fonts.googleapis.com/css2?family=Caveat+Brush&amp;family=Source+Code+Pro&amp;family=Source+Sans+Pro&amp;family=Crimson+Pro&amp;display=block');</style></defs></svg>"`;
