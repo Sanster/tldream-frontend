@@ -1,3 +1,4 @@
+import { DEFAULT_DIFFUSION_PARAMS } from '~constants'
 import {
   Decoration,
   FontStyle,
@@ -140,6 +141,14 @@ export function migrate(state: TDSnapshot, newVersion: number): TDSnapshot {
     pageState.editingId = undefined
     pageState.hoveredId = undefined
     pageState.pointedId = undefined
+  })
+
+  // Add default diffusion params
+  Object.keys(document.pageDiffusionParams).forEach((paramsId) => {
+    document.pageDiffusionParams[paramsId] = {
+      ...DEFAULT_DIFFUSION_PARAMS,
+      ...document.pageDiffusionParams[paramsId],
+    }
   })
 
   document.version = newVersion
