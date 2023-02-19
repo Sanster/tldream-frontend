@@ -23,7 +23,7 @@
   "types": "./dist/index.d.ts",
   "source": "./src/index.ts",
   "scripts": {
-    "dev": "yarn lfg -d",
+    "dev": "NEXT_PUBLIC_DIFFUSION_API_URL=http://127.0.0.1:4242 yarn lfg -d",
     "build": "yarn lfg",
     "lint": "TIMING=1 eslint src/ --ext .ts,.tsx",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",

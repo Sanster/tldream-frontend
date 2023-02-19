@@ -1,14 +1,19 @@
 import * as Dialog from '@radix-ui/react-alert-dialog'
+import * as Progress from '@radix-ui/react-progress'
 import * as React from 'react'
 import io from 'socket.io-client'
 import { TextAreaField } from '~components/Primitives/TextAreaField'
 import { TextField } from '~components/Primitives/TextField'
 import { useContainer, useTldrawApp } from '~hooks'
-import * as Progress from '@radix-ui/react-progress'
 import { styled } from '~styles'
 import { TDSnapshot } from '~types'
 
-const socket = io('ws://localhost:4242', {
+let API_ENDPOINT = process.env.NEXT_PUBLIC_DIFFUSION_API_URL
+  ? process.env.NEXT_PUBLIC_DIFFUSION_API_URL
+  : ''
+API_ENDPOINT = API_ENDPOINT.replace('https://', '').replace('http://', '')
+
+const socket = io(`ws://${API_ENDPOINT}`, {
   path: '/ws/socket.io/',
   transports: ['websocket', 'polling'],
 })
@@ -20,11 +25,11 @@ const DiffusionStepsDialog = () => {
   const app = useTldrawApp()
   const container = useContainer()
   const [isConnected, setIsConnected] = React.useState(socket.connected)
-  const isRunningModel = app.useStore(s => s.appState.isRunningModel)
+  const isRunningModel = app.useStore((s) => s.appState.isRunningModel)
   const diffusionParams = app.useStore(currentPageParamsSelector)
   const [step, setStep] = React.useState(0)
 
-  const progress = Math.round((step / diffusionParams.steps) * 100)
+  const progress = Math.min(Math.round((step / diffusionParams.steps) * 100), 100)
 
   React.useEffect(() => {
     socket.on('connect', () => {
@@ -35,13 +40,13 @@ const DiffusionStepsDialog = () => {
       setIsConnected(false)
     })
 
-    socket.on('progress', data => {
+    socket.on('progress', (data) => {
       if (data) {
         setStep(data.step + 1)
       }
     })
 
-    socket.on('finish', data => {
+    socket.on('finish', (data) => {
       setStep(0)
     })
 

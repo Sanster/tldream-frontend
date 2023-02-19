@@ -11,7 +11,9 @@ import { useUploadAssets } from '~hooks/useUploadAssets'
 
 declare const window: Window & { app: TldrawApp }
 
-const API_ENDPOINT = ''
+const API_ENDPOINT = process.env.NEXT_PUBLIC_DIFFUSION_API_URL
+  ? process.env.NEXT_PUBLIC_DIFFUSION_API_URL
+  : ''
 
 async function runModel(imageBlob: Blob, params: DiffusionParams) {
   const imageFile = new File([imageBlob], 'image', {
@@ -27,7 +29,7 @@ async function runModel(imageBlob: Blob, params: DiffusionParams) {
   fd.append('height', params.height.toString())
 
   try {
-    const res = await fetch(`http://127.0.0.1:4242/run`, {
+    const res = await fetch(`${API_ENDPOINT}/run`, {
       method: 'POST',
       body: fd,
     })
